@@ -1,7 +1,6 @@
 ## DrakorID API Scraper
 Get Drakor series/movies from DrakorID
 ![](https://s1.zerochan.net/Sousou.no.Frieren.600.3456279.jpg)
-## Usage
 
 ## Basic
 ### Installation 
@@ -25,7 +24,7 @@ import drakor from 'drakor-api-scraper'
 // or
 import { latest, search, detail } from 'drakor-api-scraper'
 ```
-### Example
+## Example
 - Get ```latest``` drakor
 ```js
 import drakor from 'drakor-api-scraper'
