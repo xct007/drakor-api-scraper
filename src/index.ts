@@ -71,7 +71,7 @@ export const search = async (query: string): Promise<object> => {
 
 /**
  * Get drakor detail, eg. title, description, rating, etc.
- * @param {Number} id
+ * @param {Number} id (cid, channel_id, categorie_id) see @line 12, 39
  **/
 export const detail = async (id: number): Promise<object | boolean> => {
 	let result: object | boolean;
@@ -80,7 +80,7 @@ export const detail = async (id: number): Promise<object | boolean> => {
 	Params.append('page', 1);
 	Params.append('count', 20);
 	Params.append('isAPKvalid', true);
-	const { data } = await axios.request({
+	const data = await axios.request({
 		url: API_ENDPOINT_CATEGORY,
 		method: 'POST',
 		headers: {
@@ -89,9 +89,21 @@ export const detail = async (id: number): Promise<object | boolean> => {
 			'User-Agent': 'okhttp/3.10.0',
 		},
 		data: Params,
+	}).catch((e: any) => {
+		return e.response.status;
 	});
-	if (data.status == 'ok' && data.posts.length) {
-		result = data;
+	/** @warning
+	 * API_ENDPOINT_CATEGORY sometimes return error
+	if (data == "ECONNRESET") {
+		return {
+			status: "failed",
+			msg: "{API_ENDPOINT_CATEGORY}",
+			code: data
+		}
+	}
+	*/
+	if (data.data.status == 'ok' && data.data.posts.length) {
+		result = data.data;
 	} else {
 		try {
 			Params.delete('id');
@@ -109,7 +121,19 @@ export const detail = async (id: number): Promise<object | boolean> => {
 					'User-Agent': 'okhttp/3.10.0',
 				},
 				data: Params,
+			}).catch((e: any) => {
+				return e.response.status;
 			});
+			/** @warning
+			* API_ENDPOINT_CHANNEL sometimes return error
+			if (_data == "ECONNRESET") {
+				return {
+					status: "failed",
+					msg: "{API_ENDPOINT_CHANNEL}",
+					code: data
+				}
+			}
+			*/
 			if (_data.data.status == 'ok' && _data.data.channel_id == id) {
 				result = _data.data;
 			} else {
