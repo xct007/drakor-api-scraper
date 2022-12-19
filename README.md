@@ -133,7 +133,7 @@ drakor.detail(id).then((json) => {
 });
 ```
 
-- output if \*_id"_ is `cid`
+- output if **id** is `cid`
 
 ```js
 {
