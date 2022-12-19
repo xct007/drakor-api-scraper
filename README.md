@@ -195,3 +195,6 @@ drakor.detail(id).then((json) => {
   years: 2022
 }
 ```
+## TODO 
+- [ ] Make code more readable
+  - [ ] Remove complex code
